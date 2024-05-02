@@ -47,7 +47,7 @@ export default function Welcome({navigation}) {
                 </View>
                 <View style={styles.buttonContainer}>
                     <CustomButton onPress={() => navigation.navigate("SignIn")} variant="blank" title="Sign In"/>
-                    <CustomButton onPress={() => navigation.navigate("SignUp")} variant="filled" title="Sign Up"/>
+                    <CustomButton onPress={() => navigation.navigate("SignUp")} marginTop={5} variant="filled" title="Sign Up"/>
                 </View>
             {/*</ImageBackground>*/}
         </SafeAreaView>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     optionTitle: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight:  "400",
         lineHeight: 16,
         marginTop: 10,
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         display: "flex",
         flexDirection: "column",
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginBottom: 10
     }
 });
