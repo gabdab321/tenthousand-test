@@ -1,4 +1,4 @@
-import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 
 export default function SignUp({navigation}) {
 
@@ -7,7 +7,7 @@ export default function SignUp({navigation}) {
             <Text style={styles.text}>
                 Sign Up
             </Text>
-            <Text onPress={() => navigation.navigate("Login")} style={styles.link}>
+            <Text onPress={() => navigation.navigate("SignIn")} style={styles.link}>
                 Already have an account?
             </Text>
         </SafeAreaView>

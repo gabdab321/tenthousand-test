@@ -1,6 +1,6 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import Login from "./pages/Login";
+import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import {StatusBar} from "react-native";
 import Welcome from "./pages/Welcome";
@@ -16,9 +16,8 @@ export default function App() {
                     component={Welcome}
                 />
                 <Stack.Screen
-                    name="Login"
-                    component={Login}
-                    options={{title: "Welcome"}}
+                    name="SignIn"
+                    component={SignIn}
                 />
                 <Stack.Screen name="SignUp" component={SignUp} />
             </Stack.Navigator>
