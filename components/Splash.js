@@ -1,4 +1,4 @@
-import {Image, SafeAreaView, StyleSheet} from "react-native";
+import {SafeAreaView, StyleSheet} from "react-native";
 import SplashSVG from "../assets/splash";
 import {useEffect} from "react";
 
