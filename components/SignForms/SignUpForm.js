@@ -1,12 +1,13 @@
 import {Controller, useForm} from "react-hook-form";
-import CustomInput from "./UI/CustomInput";
-import {KeyboardAvoidingView, Text, View, StyleSheet} from "react-native";
-import CustomButton from "./UI/CustomButton";
-import {err} from "react-native-svg";
-import EyeSVG from "../assets/Sign/eye";
+import CustomInput from "../UI/CustomInput";
+import {KeyboardAvoidingView, Text, View} from "react-native";
+import CustomButton from "../UI/CustomButton";
+import EyeSVG from "../../assets/Sign/eye";
 import {useState} from "react";
+import ErrorSVG from "../../assets/Sign/error_indicator";
+import styles from "./formsStyles";
 
-export default function SignUpForm() {
+export default function SignUpForm({navigation}) {
     const [isSecure, setIsSecure] = useState(true)
     const {
         control,
@@ -19,10 +20,9 @@ export default function SignUpForm() {
             password: "",
         },
     })
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) => console.log(data) // TODO: make something when both layouts are ready
 
     function toggleIsSecure() {
-        console.log("a")
         setIsSecure(!isSecure)
     }
 
@@ -44,7 +44,9 @@ export default function SignUpForm() {
                             value={value}
                             label={"Name"}
                             customStyles={errors.name ? {borderColor: "#D63C41"}: {}}
-                        />
+                        >
+                            {errors.name && <ErrorSVG/>}
+                        </CustomInput>
                     )}
                     name="name"
                 />
@@ -65,7 +67,9 @@ export default function SignUpForm() {
                             value={value}
                             label={"E-mail"}
                             customStyles={errors.email ? {borderColor: "#D63C41"}: {}}
-                        />
+                        >
+                            {errors.email && <ErrorSVG/>}
+                        </CustomInput>
                     )}
                     name="email"
                 />
@@ -102,16 +106,3 @@ export default function SignUpForm() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    formContainer: {
-        marginTop: 20,
-        height: "85%",
-        justifyContent: "space-between"
-    },
-    errorMessage: {
-        color: "#D63C41",
-        fontSize: 15,
-        marginLeft: 12
-    }
-})
