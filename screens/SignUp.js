@@ -1,20 +1,25 @@
-import {StyleSheet, Text, TextInput, View, ImageBackground} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ImageBackground,
+    KeyboardAvoidingView,
+    Dimensions
+} from 'react-native';
 import {useForm, Controller} from "react-hook-form";
 import CustomButton from "../components/UI/CustomButton";
 import {LinearGradient} from "expo-linear-gradient";
+import UserSVG from "../assets/Sign/createUser";
+import CustomInput from "../components/UI/CustomInput";
+import ArrowSVG from "../assets/Sign/arrow";
+import SignUpForm from "../components/SignUpForm";
 
+// TODO: make nicer keyboard avoiding behavior
 export default function SignUp({navigation}) {
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        defaultValues: {
-            firstName: "",
-            lastName: "",
-        },
-    })
-    const onSubmit = (data) => console.log(data)
+
+
+
+    const windowHeight = Dimensions.get('window').height;
 
     return (
         <View style={styles.container}>
@@ -22,50 +27,21 @@ export default function SignUp({navigation}) {
                             start={{ x: 0, y: 1 }}
                             end={{ x: 1, y: 0 }}>
                 <ImageBackground style={styles.bgImg} source={require("../assets/Sign/bg.png")} resizeMode="cover">
-                    <View style={styles.contentContainer}>
-                        <View style={styles.formContainer}>
-                            <Controller
-                                control={control}
-                                rules={{
-                                    required: true,
-                                    maxLength: 64,
-                                    minLength: 8,
-                                }}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        placeholder="First name"
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        style={styles.input}
-                                    />
-                                )}
-                                name="firstName"
-                            />
-                            {errors.firstName && <Text>This is required.</Text>}
-
-                            <Controller
-                                control={control}
-                                rules={{
-                                    maxLength: 100,
-                                }}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        placeholder="Last name"
-                                        onBlur={onBlur}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        style={{...styles.input, marginTop: 10}}
-                                    />
-                                )}
-                                name="lastName"
-                            />
-
-                            <CustomButton marginTop={20} title="Continue" onPress={handleSubmit(onSubmit)} />
+                    <ArrowSVG onPress={() => navigation.goBack()} style={{marginTop: 50, marginLeft: 10}}/>
+                    <View style={{...styles.contentContainer, height: windowHeight-100}}>
+                        <View style={styles.titleContainer}>
+                            <UserSVG />
+                            <View style={{marginLeft: 10}}>
+                                <Text style={styles.title}>Sign Up</Text>
+                                <Text style={{...styles.title, color: "#606773"}}>Personal account</Text>
+                            </View>
                         </View>
+                        <View style={{borderBottomColor: '#bcbcbe', borderBottomWidth: StyleSheet.hairlineWidth}}/>
+                        <SignUpForm/>
                     </View>
                 </ImageBackground>
             </LinearGradient>
+
 
         </View>
     );
@@ -83,37 +59,32 @@ const styles = StyleSheet.create({
         height: "100%",
 
     },
-    text: {
-        color: "red",
-        fontWeight: "bold",
-        fontSize: 60
+    title: {
+        fontSize: 15,
+        fontWeight: "500",
+        lineHeight: 24,
     },
-    link: {
-        color: "blue",
-        fontSize: 20,
-        marginTop: 10
-    },
-    input: {
-        width: "100%",
-        borderWidth: 1,
-        borderRadius: 16,
-        borderColor: "#CED5E0",
-        lineHeight: 16,
-        paddingHorizontal: 20,
-        paddingVertical: 14,
-        color: "#06070A",
-        fontSize: 15
+    titleContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 10
     },
     contentContainer: {
         width: "100%",
-        height: "100%",
-        marginTop: 120,
+        // height: "87%",
+        marginTop: 100,
         padding: 20,
         backgroundColor: "#fff",
         position: "absolute",
-        borderRadius: 27,
-        elevation: 12
+        borderTopRightRadius: 27,
+        borderTopLeftRadius: 27,
+        elevation: 12,
+
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
     },
-    formContainer: {
-    }
+
 });

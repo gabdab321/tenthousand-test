@@ -1,17 +1,17 @@
 import {Text, Pressable, StyleSheet} from "react-native";
 
 export default function CustomButton(props) {
-    const {variant, title, marginTop} = props
+    const {variant, title, marginTop, customStyles} = props
 
     if(variant === "blank") {
         return (
-            <Pressable {...props} style={{...styles.button, backgroundColor: "transparent", marginTop: marginTop || 0}}>
+            <Pressable {...props} style={{...styles.button, ...customStyles, backgroundColor: "transparent"}}>
                 <Text style={{...styles.text, color: "#00A36D"}}>{title}</Text>
             </Pressable>
         )
     } else {
         return (
-            <Pressable {...props} style={{...styles.button, backgroundColor: "#00B28C", marginTop: marginTop || 0}}>
+            <Pressable {...props} style={{...styles.button, ...customStyles,backgroundColor: "#00B28C"}}>
                 <Text style={{...styles.text, color: "#fff"}}>{title}</Text>
             </Pressable>
         )
