@@ -22,7 +22,9 @@ export default function SignInForm() {
     })
     const navigation = useNavigation()
 
-    const onSubmit = (data) => console.log(data) // TODO: make something when both layouts are ready
+    const onSubmit = (data) => {
+        navigation.navigate("PinCode")
+    } // TODO: make credentials check when pin code layout are ready
 
     function toggleIsSecure() {
         setIsSecure(!isSecure)

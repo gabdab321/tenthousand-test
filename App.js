@@ -5,6 +5,7 @@ import SignUp from "./screens/SignScreens/SignUp";
 import {StatusBar} from "react-native";
 import Welcome from "./screens/Welcome";
 import Splash from "./components/Splash";
+import PinCode from "./screens/PinCode";
 
 const Stack = createNativeStackNavigator()
 
@@ -25,6 +26,10 @@ export default function App() {
                     component={SignIn}
                 />
                 <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen
+                    name="PinCode"
+                    component={PinCode}
+                />
             </Stack.Navigator>
             <StatusBar barStyle="dark-content"/>
         </NavigationContainer>

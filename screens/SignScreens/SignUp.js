@@ -1,6 +1,6 @@
 import {View, ImageBackground} from 'react-native';
 import {LinearGradient} from "expo-linear-gradient";
-import ArrowSVG from "../../assets/Sign/arrow";
+import ArrowSVG from "../../assets/arrow";
 import styles from "./signStyles";
 import SignContainer from "../../components/SignContainer";
 
