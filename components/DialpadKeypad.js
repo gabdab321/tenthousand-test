@@ -5,14 +5,16 @@ import {
     FlatList,
     TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
-import {addPin, deletePin, setCode} from "../store/slices/pinSlice";
+import {addPin, clearPin, deletePin} from "../store/slices/pinSlice";
 import BackspaceSVG from "../assets/PinCode/backspace";
+import keychainPin from "../services/keychainPin";
+import * as SecureStore from "expo-secure-store"
+
 
 export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
-    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const {
@@ -20,6 +22,18 @@ export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
         dialPadContent,
         pinLength
     } = useSelector(state => state.pin)
+
+    function handlePress(item) {
+        if (item === "backspace") {
+            dispatch( deletePin() )
+        } else {
+            if (code.length === pinLength) {
+                return
+            }
+            dispatch(addPin(item))
+
+        }
+    }
 
     return (
         <FlatList
@@ -31,18 +45,7 @@ export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
                 return (
                     <TouchableOpacity
                         disabled={item === ""} // make the empty space on the dialpad content unclickable
-                        onPress={() => {
-                            if (item === "backspace") {
-                                dispatch( deletePin() )
-                            } else {
-                                if (code.length === pinLength - 1) {
-                                    navigation.navigate("Welcome");
-                                    dispatch(setCode([])) // clear redux storage
-                                    return
-                                }
-                                dispatch(addPin(item))
-                            }
-                        }}
+                        onPress={() => handlePress(item)}
                     >
                         <View
                             style={[

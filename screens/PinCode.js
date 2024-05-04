@@ -1,11 +1,38 @@
 import {SafeAreaView, Text, View, StyleSheet} from "react-native";
 import CustomButton from "../components/UI/CustomButton";
 import PhoneSVG from "../assets/PinCode/phone";
-import DialpadKeypad from "../components/DialpadKeypad";
 import CustomDialpad from "../components/CustomDialpad";
 import DialpadPin from "../components/DialpadPin";
+import {useDispatch, useSelector} from "react-redux";
+import keychainPin from "../services/keychainPin";
+import {clearPin} from "../store/slices/pinSlice";
+import {useState} from "react";
 
-export default function PinCode() {
+export default function PinCode({route, navigation}) {
+    const dispatch = useDispatch()
+    const code = useSelector(state => state.pin.code)
+    const {type} = route.params
+
+    const [error, setError] = useState("")
+
+    // used when pin screen is opened the first time
+    async function createPin() {
+        navigation.navigate("PinCode", {type: "Repeat"});
+        await keychainPin.setPinCredentials(code.join(""))
+        dispatch(clearPin()) // clear redux storage
+    }
+
+    // used when pin screen is opened second time
+    async function submitPin() {
+        const pinCode = await keychainPin.getPinCredentials()
+        if(pinCode === code.join("")) {
+            console.log("all is good, give us tour biometrics")
+            setError("")
+        } else {
+            setError("Wrong pin code!")
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -15,7 +42,8 @@ export default function PinCode() {
                     <View style={styles.iconContainer}>
                         <PhoneSVG/>
                     </View>
-                    <Text style={styles.title}>Create a pin code</Text>
+                    <Text style={styles.title}>{route.params.type} a pin code</Text>
+                    {error && <Text style={styles.errorMessage}>{error}</Text>}
                 </View>
 
                 <View style={styles.codeContainer}>
@@ -33,8 +61,12 @@ export default function PinCode() {
                 <View style={{borderBottomColor: '#bcbcbe', borderBottomWidth: StyleSheet.hairlineWidth}}/>
 
 
-                <CustomButton title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
-
+                {type === "Enter"
+                    ?
+                    <CustomButton onPress={createPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
+                    :
+                    <CustomButton onPress={submitPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
+                }
             </View>
 
 
@@ -48,7 +80,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
-
+    errorMessage: {
+        color: "#D63C41",
+        fontSize: 20,
+        marginLeft: 12
+    },
     topContainer: {
         alignItems: "center",
         marginTop: 30

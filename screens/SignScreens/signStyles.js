@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     bgImg: {
         width: "100%",
         height: "100%",
-
     }
 });
 

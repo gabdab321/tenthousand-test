@@ -3,9 +3,8 @@ import {
     View,
     Dimensions,
 } from "react-native";
-import React, {useState} from "react";
+import React from "react";
 import DialpadKeypad from "../components/DialpadKeypad";
-import DialpadPin from "./DialpadPin";
 
 const { width} = Dimensions.get("window")
 

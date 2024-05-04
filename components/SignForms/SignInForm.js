@@ -23,7 +23,8 @@ export default function SignInForm() {
     const navigation = useNavigation()
 
     const onSubmit = (data) => {
-        navigation.navigate("PinCode")
+
+        navigation.navigate("PinCode", {type: "Enter"})
     } // TODO: make credentials check when pin code layout are ready
 
     function toggleIsSecure() {
@@ -79,8 +80,16 @@ export default function SignInForm() {
             </View>
 
             <KeyboardAvoidingView style={{marginTop: 30}} behavior="height">
-                <CustomButton title="Continue" onPress={handleSubmit(onSubmit)} />
-                <CustomButton onPress={() => navigation.navigate("SignUp")} customStyles={{marginTop: 10}} title="Create account" variant="blank" />
+                <CustomButton
+                    title="Continue"
+                    onPress={handleSubmit(onSubmit)}
+                />
+                <CustomButton
+                    onPress={() => navigation.navigate("SignUp")}
+                    customStyles={{marginTop: 10}}
+                    title="Create account"
+                    variant="blank"
+                />
             </KeyboardAvoidingView>
         </View>
     )
