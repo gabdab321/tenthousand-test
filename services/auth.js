@@ -36,7 +36,7 @@ export const authenticate = async (dispatch, email, password) => {
             username: email,
             password: password,
         }, {headers: {'Content-Type': 'application/json'}});
-        const { user, token } = response.data;
+        const { token, ...user } = response.data;
 
         await SecureStore.setItemAsync('authToken', token);
 

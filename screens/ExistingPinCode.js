@@ -1,49 +1,29 @@
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
-import CustomButton from "../components/UI/CustomButton";
-import PhoneSVG from "../assets/PinCode/phone";
-import CustomDialpad from "../components/CustomDialpad";
-import DialpadPin from "../components/DialpadPin";
 import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 import keychainPin from "../services/keychainPin";
 import {clearPin} from "../store/slices/pinSlice";
-import {useState} from "react";
-import * as LocalAuthentication from "expo-local-authentication";
+import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import DialpadPin from "../components/DialpadPin";
+import CustomDialpad from "../components/CustomDialpad";
+import CustomButton from "../components/UI/CustomButton";
+import UserSVG from "../assets/PinCode/user";
 
-export default function PinCode({route, navigation}) {
-    const dispatch = useDispatch()
+
+// For the most part, this screen is a copy of PinCode, but there are differences in logic and rendering.
+// I have made it into a separate component for convenience and better readability
+export default function ExistingPinCode({navigation}) {
     const code = useSelector(state => state.pin.code)
-    const {type} = route.params
+    const auth = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     const [error, setError] = useState("")
 
-    // used when pin screen is opened the first time
-    async function createPin() {
-        navigation.navigate("PinCode", {type: "Repeat"});
-        await keychainPin.setPinCredentials(code.join(""))
-        dispatch(clearPin()) // clear redux storage
-    }
-
-    // used when pin screen is opened second time
-    async function submitPin() {
+    async function checkPin() {
         const pinCode = await keychainPin.getPinCredentials()
         if(pinCode === code.join("")) {
-            // getting biometrics
-            const hasBiometricHardware = await LocalAuthentication.hasHardwareAsync();
-            const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-
-            if(!hasBiometricHardware || !isEnrolled) {
-                return
-            }
-
-            const result = await LocalAuthentication.authenticateAsync({
-                promptMessage: 'Authenticate with biometrics',
-            });
-
-            if (result.success) {
-                navigation.navigate("Home")
-            }
-            setError("")
+            navigation.navigate("Home")
         } else {
+            dispatch(clearPin())
             setError("Wrong pin code!")
         }
     }
@@ -55,9 +35,10 @@ export default function PinCode({route, navigation}) {
 
                 <View style={styles.titleContainer}>
                     <View style={styles.iconContainer}>
-                        <PhoneSVG/>
+                        <UserSVG/>
                     </View>
-                    <Text style={styles.title}>{route.params.type} a pin code</Text>
+                    <Text style={styles.title}>{auth.user.email}</Text>
+                    <Text style={styles.link}>Change Account</Text>
                     {error && <Text style={styles.errorMessage}>{error}</Text>}
                 </View>
 
@@ -76,12 +57,7 @@ export default function PinCode({route, navigation}) {
                 <View style={{borderBottomColor: '#bcbcbe', borderBottomWidth: StyleSheet.hairlineWidth}}/>
 
 
-                {type === "Enter"
-                    ?
-                    <CustomButton onPress={createPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
-                    :
-                    <CustomButton onPress={submitPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
-                }
+                <CustomButton onPress={checkPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
             </View>
 
 
@@ -104,6 +80,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 30
     },
+    link: {
+        color: "#009E81",
+        fontSize: 15,
+        fontWeight: "400",
+        lineHeight: 16,
+        marginTop: 10
+},
     iconContainer: {
         width: 48,
         height: 48,
@@ -130,23 +113,8 @@ const styles = StyleSheet.create({
         marginTop: 45,
         alignItems: "center"
     },
-    dotContainer: {
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "start",
-        width: 200,
-        marginTop: 25
-    },
-    dot: {
-        width: 24,
-        height: 24,
-        borderRadius: 50,
-        backgroundColor: "#C1C4CB"
-    },
     bottomContainer: {
         width: "100%",
         padding: 20,
     },
-    numpad: {
-    }
 })
