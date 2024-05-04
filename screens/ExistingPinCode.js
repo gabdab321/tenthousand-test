@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import keychainPin from "../services/keychainPin";
 import {clearPin} from "../store/slices/pinSlice";
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
@@ -7,6 +7,7 @@ import DialpadPin from "../components/DialpadPin";
 import CustomDialpad from "../components/CustomDialpad";
 import CustomButton from "../components/UI/CustomButton";
 import UserSVG from "../assets/PinCode/user";
+import * as LocalAuthentication from "expo-local-authentication";
 
 
 // For the most part, this screen is a copy of PinCode, but there are differences in logic and rendering.
@@ -17,6 +18,27 @@ export default function ExistingPinCode({navigation}) {
     const dispatch = useDispatch()
 
     const [error, setError] = useState("")
+
+    useEffect(() => {
+        async function checkBiometrics() {
+            const hasBiometricHardware = await LocalAuthentication.hasHardwareAsync();
+            const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+            if(!hasBiometricHardware || !isEnrolled) {
+                return
+            }
+
+            const result = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Authenticate with biometrics',
+            });
+
+            if (result.success) {
+                navigation.navigate("Home")
+            }
+        }
+
+        checkBiometrics()
+    }, [])
 
     async function checkPin() {
         const pinCode = await keychainPin.getPinCredentials()
