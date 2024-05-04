@@ -1,7 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
+import {useSelector} from "react-redux";
 
-const DialpadPin = ({ pinLength, pinSize, code, dialPadContent }) => {
+const DialpadPin = () => {
+    const {
+        dialPadContent,
+        code,
+        pinLength
+    } = useSelector(state => state.pin)
+
     return (
         <View style={styles.dialPadPinContainer}>
             {Array(pinLength)
@@ -34,7 +41,7 @@ export default DialpadPin;
 const styles = StyleSheet.create({
     dialPadPinContainer: {
         flexDirection: "row",
-        marginBottom: 30,
+        marginTop: 30,
         alignItems: "flex-end",
     },
     pinContentContainer: {

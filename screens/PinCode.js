@@ -3,6 +3,7 @@ import CustomButton from "../components/UI/CustomButton";
 import PhoneSVG from "../assets/PinCode/phone";
 import DialpadKeypad from "../components/DialpadKeypad";
 import CustomDialpad from "../components/CustomDialpad";
+import DialpadPin from "../components/DialpadPin";
 
 export default function PinCode() {
     return (
@@ -19,13 +20,7 @@ export default function PinCode() {
 
                 <View style={styles.codeContainer}>
                     <Text style={styles.subtitle}>enter 5 digit code:</Text>
-                    <View style={styles.dotContainer}>
-                        <View style={{...styles.dot, backgroundColor: "#00B28C"}}/>
-                        <View style={{...styles.dot, backgroundColor: "#00B28C"}}/>
-                        <View style={styles.dot}/>
-                        <View style={styles.dot}/>
-                        <View style={styles.dot}/>
-                    </View>
+                    <DialpadPin/>
                 </View>
 
             </View>

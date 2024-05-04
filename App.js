@@ -6,32 +6,36 @@ import {StatusBar} from "react-native";
 import Welcome from "./screens/Welcome";
 import Splash from "./components/Splash";
 import PinCode from "./screens/PinCode";
+import {Provider} from "react-redux";
+import store from "./store/store";
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen
-                    name="Splash"
-                    component={Splash}
-                />
-                <Stack.Screen
-                    name="Welcome"
-                    component={Welcome}
-                />
-                <Stack.Screen
-                    name="SignIn"
-                    component={SignIn}
-                />
-                <Stack.Screen name="SignUp" component={SignUp} />
-                <Stack.Screen
-                    name="PinCode"
-                    component={PinCode}
-                />
-            </Stack.Navigator>
-            <StatusBar barStyle="dark-content"/>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{headerShown: false}}>
+                    <Stack.Screen
+                        name="Splash"
+                        component={Splash}
+                    />
+                    <Stack.Screen
+                        name="Welcome"
+                        component={Welcome}
+                    />
+                    <Stack.Screen
+                        name="SignIn"
+                        component={SignIn}
+                    />
+                    <Stack.Screen name="SignUp" component={SignUp} />
+                    <Stack.Screen
+                        name="PinCode"
+                        component={PinCode}
+                    />
+                </Stack.Navigator>
+                <StatusBar barStyle="dark-content"/>
+            </NavigationContainer>
+        </Provider>
     );
 }

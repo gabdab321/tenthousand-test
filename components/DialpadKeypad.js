@@ -7,11 +7,19 @@ import {
 } from "react-native";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
-import ArrowSVG from "../assets/arrow";
-import backspace from "../assets/PinCode/backspace";
+import {useDispatch, useSelector} from "react-redux";
+import {addPin, deletePin, setCode} from "../store/slices/pinSlice";
+import BackspaceSVG from "../assets/PinCode/backspace";
 
-export default function DialpadKeypad({dialPadContent, pinLength, dialPadSize, dialPadTextSize, code, setCode}) {
+export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+
+    const {
+        code,
+        dialPadContent,
+        pinLength
+    } = useSelector(state => state.pin)
 
     return (
         <FlatList
@@ -24,15 +32,15 @@ export default function DialpadKeypad({dialPadContent, pinLength, dialPadSize, d
                     <TouchableOpacity
                         disabled={item === ""} // make the empty space on the dialpad content unclickable
                         onPress={() => {
-                            console.log(typeof item)
-                            if (typeof item === "object") { // if item is a backspace
-                                console.log(backspace)
-                                setCode((prev) => prev.slice(0, -1));
+                            if (item === "backspace") {
+                                dispatch( deletePin() )
                             } else {
                                 if (code.length === pinLength - 1) {
                                     navigation.navigate("Welcome");
+                                    dispatch(setCode([])) // clear redux storage
+                                    return
                                 }
-                                setCode((prev) => [...prev, item]);
+                                dispatch(addPin(item))
                             }
                         }}
                     >
@@ -46,15 +54,15 @@ export default function DialpadKeypad({dialPadContent, pinLength, dialPadSize, d
                                 styles.dialPadContainer,
                             ]}
                         >
-                            {typeof item === "object" || true
+                            {item === "backspace"
                                 ?
+                                    <BackspaceSVG/>
+                                :
                                 <Text
                                     style={[{ fontSize: dialPadTextSize }, styles.dialPadText]}
                                 >
                                     {item}
                                 </Text>
-                                :
-                                ""
                             }
                         </View>
                     </TouchableOpacity>
@@ -73,6 +81,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     dialPadText: {
-        color: "#3F1D38",
+        color: "#606773",
     },
 });
