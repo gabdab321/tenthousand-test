@@ -7,9 +7,12 @@ import {useState} from "react";
 import ErrorSVG from "../../assets/Sign/error_indicator";
 import styles from "./formsStyles";
 import {useNavigation} from "@react-navigation/native";
+import {authenticate} from "../../services/auth";
+import {useDispatch} from "react-redux";
 
 export default function SignInForm() {
     const [isSecure, setIsSecure] = useState(true)
+    const [authError, setAuthError] = useState(false)
     const {
         control,
         handleSubmit,
@@ -21,10 +24,18 @@ export default function SignInForm() {
         },
     })
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
-    const onSubmit = (data) => {
+    async function onSubmit(data) {
+        const authResult = await authenticate(dispatch, data.email, data.password)
 
-        navigation.navigate("PinCode", {type: "Enter"})
+        if(authResult) {
+            setAuthError(false)
+            navigation.navigate("PinCode", {type: "Enter"})
+        }else {
+            setAuthError(true)
+        }
+
     } // TODO: make credentials check when pin code layout are ready
 
     function toggleIsSecure() {
@@ -34,7 +45,7 @@ export default function SignInForm() {
     return (
         <View style={{...styles.formContainer, justifyContent: "flex-start"}}>
             <View>
-                {errors.email && <Text style={styles.errorMessage}>Error: Incorrect email or password</Text>}
+                {authError && <Text style={styles.errorMessage}>Error: Incorrect email or password</Text>}
                 <Controller
                     control={control}
                     rules={{

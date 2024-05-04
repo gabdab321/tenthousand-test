@@ -3,6 +3,7 @@ import SplashSVG from "../assets/splash";
 import {useEffect} from "react";
 
 export default function Splash({navigation}) {
+
     useEffect(() => {
         setTimeout(() => {
             navigation.navigate('Welcome');

@@ -5,13 +5,10 @@ import {
     FlatList,
     TouchableOpacity,
 } from "react-native";
-import React, {useEffect} from "react";
-import {useNavigation} from "@react-navigation/native";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPin, clearPin, deletePin} from "../store/slices/pinSlice";
+import {addPin, deletePin} from "../store/slices/pinSlice";
 import BackspaceSVG from "../assets/PinCode/backspace";
-import keychainPin from "../services/keychainPin";
-import * as SecureStore from "expo-secure-store"
 
 
 export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
@@ -31,7 +28,6 @@ export default function DialpadKeypad({dialPadSize, dialPadTextSize}) {
                 return
             }
             dispatch(addPin(item))
-
         }
     }
 

@@ -1,4 +1,4 @@
-import {SafeAreaView, Text, View, StyleSheet} from "react-native";
+import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import CustomButton from "../components/UI/CustomButton";
 import PhoneSVG from "../assets/PinCode/phone";
 import CustomDialpad from "../components/CustomDialpad";
@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import keychainPin from "../services/keychainPin";
 import {clearPin} from "../store/slices/pinSlice";
 import {useState} from "react";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function PinCode({route, navigation}) {
     const dispatch = useDispatch()
@@ -26,10 +27,28 @@ export default function PinCode({route, navigation}) {
     async function submitPin() {
         const pinCode = await keychainPin.getPinCredentials()
         if(pinCode === code.join("")) {
-            console.log("all is good, give us tour biometrics")
+            // getting biometrics
+            const hasBiometricHardware = await LocalAuthentication.hasHardwareAsync();
+            const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+            if(!hasBiometricHardware || !isEnrolled) {
+                return
+            }
+
+            const result = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Authenticate with biometrics',
+            });
+
+            if (result.success) {
+                console.log('Authenticated successfully!');
+            }
             setError("")
         } else {
             setError("Wrong pin code!")
+        }
+
+        async function hasBiometricHardware() {
+            return await LocalAuthentication.hasHardwareAsync();
         }
     }
 

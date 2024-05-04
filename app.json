@@ -2,9 +2,9 @@
   "expo": {
     "plugins": [
       [
-        "expo-secure-store",
+        "expo-local-authentication",
         {
-          "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
+          "faceIDPermission": "Allow us to access your Face ID biometric data."
         }
       ]
     ],
