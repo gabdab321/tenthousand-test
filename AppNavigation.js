@@ -9,6 +9,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useSelector} from "react-redux";
 import Home from "./screens/Home";
 import ExistingPinCode from "./screens/ExistingPinCode";
+import Post from "./screens/Post";
 
 const Stack = createNativeStackNavigator()
 
@@ -31,6 +32,7 @@ function AppNavigation() {
                             component={ExistingPinCode}
                         />
                         <Stack.Screen name="Home" component={Home}/>
+                        <Stack.Screen name="Post" component={Post}/>
                     </>
                     :
                     <>

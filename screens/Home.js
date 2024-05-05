@@ -1,13 +1,11 @@
-import {SafeAreaView, Text, StyleSheet, ScrollView, View} from "react-native";
-import CustomButton from "../components/UI/CustomButton";
-import {logout} from "../services/auth";
+import {Text, StyleSheet, ScrollView} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {LinearGradient} from "expo-linear-gradient";
 import PersonalAdvisor from "../components/PersonalAdvisor";
 import BeforeStart from "../components/BeforeStart";
+import PostsList from "../components/PostsList";
 
 export default function Home() {
-    const dispatch = useDispatch()
     const {user} = useSelector(state => state.auth)
 
     return (
@@ -19,6 +17,7 @@ export default function Home() {
 
             <PersonalAdvisor/>
             <BeforeStart/>
+            <PostsList/>
         </ScrollView>
     )
 }
