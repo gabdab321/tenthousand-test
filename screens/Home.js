@@ -4,28 +4,34 @@ import {LinearGradient} from "expo-linear-gradient";
 import PersonalAdvisor from "../components/PersonalAdvisor";
 import BeforeStart from "../components/BeforeStart";
 import PostsList from "../components/PostsList";
+import NavigationTab from "../components/NavigationTab";
 
 export default function Home() {
     const {user} = useSelector(state => state.auth)
 
     return (
-        <ScrollView style={styles.container}>
-            <LinearGradient style={styles.linearGradient} colors={["#38AB9C", "#02726E"]}>
-                <Text style={styles.text}>Your name</Text>
-                <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
-            </LinearGradient>
+        <>
+            <ScrollView style={styles.container}>
+                <LinearGradient style={styles.linearGradient} colors={["#38AB9C", "#02726E"]}>
+                    <Text style={styles.text}>Your name</Text>
+                    <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
+                </LinearGradient>
 
-            <PersonalAdvisor/>
-            <BeforeStart/>
-            <PostsList/>
-        </ScrollView>
+                <PersonalAdvisor/>
+                <BeforeStart/>
+                <PostsList/>
+
+            </ScrollView>
+            <NavigationTab/>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F2F3F5"
+        backgroundColor: "#F2F3F5",
+        marginBottom: 80
     },
     linearGradient: {
         flex: 1,

@@ -10,6 +10,10 @@ import {useSelector} from "react-redux";
 import Home from "./screens/Home";
 import ExistingPinCode from "./screens/ExistingPinCode";
 import Post from "./screens/Post";
+import Profile from "./screens/Profile";
+import Search from "./screens/Search";
+import Portfolio from "./screens/Portfolio";
+import ChangeLanguage from "./screens/ChangeLanguage";
 
 const Stack = createNativeStackNavigator()
 
@@ -33,6 +37,10 @@ function AppNavigation() {
                         />
                         <Stack.Screen name="Home" component={Home}/>
                         <Stack.Screen name="Post" component={Post}/>
+                        <Stack.Screen name="Portfolio" component={Portfolio}/>
+                        <Stack.Screen name="Search" component={Search}/>
+                        <Stack.Screen name="Profile" component={Profile}/>
+                        <Stack.Screen name="ChangeLanguage" component={ChangeLanguage}/>
                     </>
                     :
                     <>

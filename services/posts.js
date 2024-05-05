@@ -7,8 +7,11 @@ export async function getPosts(perPage) {
 
     return response.data
 }
-export async function getPostById(id) {
-    const response = await axios.get(`${baseUrl}/${id}`)
 
-    return response.data
+// loads post and comments for it by id
+export async function getPostById(id) {
+    const responsePost = await axios.get(`${baseUrl}/${id}`)
+    const responseComments = await axios.get(`${baseUrl}/${id}/comments`)
+
+    return {post: responsePost.data, comments: responseComments.data}
 }

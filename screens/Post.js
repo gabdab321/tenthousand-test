@@ -1,28 +1,90 @@
-import {View, Text, ScrollView, StyleSheet} from "react-native";
+import {View, Text, ScrollView, StyleSheet, Image, SafeAreaView} from "react-native";
 import {useQuery} from "@tanstack/react-query";
 import {getPostById} from "../services/posts";
+import CommentItem from "../components/CommentItem";
+import CustomButton from "../components/UI/CustomButton";
 
-export default function Post({route}) {
+export default function Post({route, navigation}) {
     const {isLoading, isError, data} = useQuery({queryKey: ["postId", route.params.id], queryFn: () => getPostById(route.params.id)})
 
     return (
-        <ScrollView style={styles.container}>
-            <Text>{isLoading ? "Loading..." : ""}</Text>
-            <View>
-                <Text style={styles.postTitle}>{data.title}</Text>
-                <Image source={require("../assets/Post/mock_image.png")}/>
+        <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}}>
+            <ScrollView style={styles.container}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.postTitle}>{data?.post.title}</Text>
+                    <Image style={styles.image} source={require("../assets/Post/mock_image.png")}/>
+                </View>
+
+                <Text style={{...styles.subtitle, marginTop: 20}}>About</Text>
+                <View style={styles.aboutSection}>
+                    <Text style={styles.postBody}>{data?.post.body}</Text>
+                </View>
+
+                <Text style={{...styles.subtitle, marginTop: 40}}>Comments</Text>
+                <View style={styles.commentsList}>
+                    {data?.comments.map(comment => <CommentItem key={comment.id} comment={comment}/>)}
+                </View>
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+                <CustomButton variant="filled" title="Back" onPress={() => navigation.navigate("Home")} />
             </View>
-        </ScrollView>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "#F2F3F5",
     },
     postTitle: {
-
+        textAlign: "center",
+        fontSize: 28,
+        fontWeight: "700",
+        lineHeight: 32,
+        color: "#000",
+        marginTop: 20
+    },
+    titleContainer: {
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingBottom: 30,
+        paddingTop: 40,
+        backgroundColor: "#fff",
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
+    },
+    image: {
+        width: "100%",
+        marginTop: 50
+    },
+    subtitle: {
+        fontSize: 15,
+        fontWeight: "400",
+        lineHeight: 16,
+        color: "#606773",
+        marginLeft: 15
+    },
+    aboutSection: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: "#fff",
+        borderRadius: 16,
+        marginTop: 5,
+        marginHorizontal: 15
+    },
+    postBody: {
+        fontSize: 15,
+        fontWeight: "400",
+        lineHeight: 32,
+        color: "#06070A",
+    },
+    commentsList: {
+      marginBottom: 10
+    },
+    buttonContainer: {
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+        backgroundColor: "#fff"
     }
 })

@@ -5,6 +5,7 @@ import AppNavigation from "./AppNavigation";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {createAsyncStoragePersister} from "@tanstack/query-async-storage-persister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import "./i18n";
 
 const queryClient = new QueryClient()
 
