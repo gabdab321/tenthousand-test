@@ -12,6 +12,7 @@ import ExistingPinCode from "./screens/ExistingPinCode";
 
 const Stack = createNativeStackNavigator()
 
+// TODO: fix splash screen
 function AppNavigation() {
     const auth = useSelector(state => state.auth);
 
@@ -33,10 +34,6 @@ function AppNavigation() {
                     </>
                     :
                     <>
-                        <Stack.Screen
-                            name="Splash"
-                            component={Splash}
-                        />
                         <Stack.Screen
                             name="Welcome"
                             component={Welcome}

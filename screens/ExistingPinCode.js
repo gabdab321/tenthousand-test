@@ -33,6 +33,7 @@ export default function ExistingPinCode({navigation}) {
             });
 
             if (result.success) {
+                dispatch(clearPin())
                 navigation.navigate("Home")
             }
         }

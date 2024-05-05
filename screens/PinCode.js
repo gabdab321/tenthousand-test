@@ -39,9 +39,8 @@ export default function PinCode({route, navigation}) {
                 promptMessage: 'Authenticate with biometrics',
             });
 
-            if (result.success) {
-                navigation.navigate("Home")
-            }
+            console.log("a")
+            navigation.navigate("Home")
             setError("")
         } else {
             setError("Wrong pin code!")
