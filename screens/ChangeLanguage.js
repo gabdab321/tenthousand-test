@@ -1,25 +1,34 @@
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LanguageSVG from "../assets/Settings/language";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
+import i18next from "i18next";
+
+const isRTL = i18next.language?.startsWith('ar');
 
 export default function ChangeLanguage() {
-    const [language, setLanguage] = useState("en")
+    const { t , i18n} = useTranslation()
+    const isRTL = i18n.language === "ar"
+
+    function handleLanguageChange(language) {
+        i18n.changeLanguage(language)
+    }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Language</Text>
+            <Text style={{...styles.title, textAlign: isRTL ? "right" : "left"}}>{t("language")}</Text>
 
-            <TouchableOpacity>
-                <View style={styles.settingsBox}>
+            <TouchableOpacity onPress={() => handleLanguageChange("en")}>
+                <View style={{...styles.settingsBox, flexDirection: isRTL ? "row-reverse" : "row",}}>
                     <LanguageSVG/>
-                    <Text style={styles.settingName}>English</Text>
+                    <Text style={styles.settingName}>{t("english")}</Text>
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-                <View style={styles.settingsBox}>
+            <TouchableOpacity onPress={() => handleLanguageChange("en")}>
+                <View style={{...styles.settingsBox, flexDirection: isRTL ? "row-reverse" : "row",}}>
                     <LanguageSVG/>
-                    <Text style={styles.settingName}>Arabic</Text>
+                    <Text style={styles.settingName}>{t("arabic")}</Text>
                 </View>
             </TouchableOpacity>
         </SafeAreaView>
@@ -35,7 +44,8 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         color: "#06070A",
         marginHorizontal: 10,
-        marginTop: 30
+        marginTop: 30,
+
     },
     avatar: {
         width: 32,
@@ -44,7 +54,7 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     settingsBox: {
-        flexDirection: "row",
+
         alignItems: "center",
         margin: 10,
         borderWidth: 1,
@@ -53,6 +63,6 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     settingName: {
-        marginLeft: 10
+        margin: 10
     }
 })

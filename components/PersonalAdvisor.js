@@ -1,20 +1,29 @@
 import {Text, View, StyleSheet, Image} from "react-native";
 import ArrowSVG from "../assets/Home/arrow";
+import {useTranslation} from "react-i18next";
+import i18next from "i18next";
+import {useMemo} from "react";
+
+const isRTL = i18next.language?.startsWith('ar');
 
 // just a layout
 export default function PersonalAdvisor() {
+    const { t, i18n } = useTranslation()
+
+    const isRTL = i18n.language === "ar"
+
     return (
-        <View style={styles.container}>
-            <View style={{paddingHorizontal: 10, paddingVertical: 20}}>
-                <Text style={styles.title}>Personal Advisor</Text>
-                <Text style={styles.name}>Muhammed Salim</Text>
+        <View style={{...styles.container, flexDirection: isRTL ? "row-reverse": "row"}}>
+            <View style={{ paddingHorizontal: 10, paddingVertical: 20 }}>
+                <Text style={styles.title}>{t("personalAdvisor")}</Text>
+                <Text style={styles.name}>{t("advisorName")}</Text>
                 <View style={styles.linkContainer}>
-                    <Text style={styles.link}>Schedule a call</Text>
-                    <ArrowSVG style={{marginLeft: 5}}/>
+                    <Text style={styles.link}>{t("scheduleCall")}</Text>
+                    <ArrowSVG style={{ marginLeft: 5 }} />
                 </View>
             </View>
             <View>
-                <Image source={require("../assets/Home/personalAdvisor.png")}/>
+                <Image source={require("../assets/Home/personalAdvisor.png")} />
             </View>
         </View>
     )
@@ -26,7 +35,6 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         marginHorizontal: 15,
         marginVertical: 25,
-        flexDirection: "row",
         justifyContent: "space-between",
         padding: 10
     },

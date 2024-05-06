@@ -6,6 +6,7 @@ import ProfileSVG from "../assets/BottomTab/profile";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {setRoute} from "../store/slices/navigationSlice";
+import {useTranslation} from "react-i18next";
 
 const styles = StyleSheet.create({
     tabBar: {
@@ -40,6 +41,8 @@ function TabItem({ title, Icon, isFocused, onPress }) {
 
 // Sorry for bad code practice, I should use bottom-tabs lib. But I am facing a large bug and have little time to fix it
 export default function NavigationTab() {
+    const { t } = useTranslation()
+
     const navigation = useNavigation();
     const dispatch = useDispatch()
 
@@ -52,25 +55,25 @@ export default function NavigationTab() {
     return (
         <View style={styles.tabBar}>
             <TabItem
-                title="Home"
+                title={t("home")} // Translation key for "Home"
                 Icon={HomeSVG}
                 isFocused={route === 'Home'}
                 onPress={() => handlePress('Home')}
             />
             <TabItem
-                title="Portfolio"
+                title={t("portfolio")} // Translation key for "Portfolio"
                 Icon={PortfolioSVG}
                 isFocused={route === 'Portfolio'}
                 onPress={() => handlePress('Portfolio')}
             />
             <TabItem
-                title="Search"
+                title={t("search")} // Translation key for "Search"
                 Icon={SearchSVG}
                 isFocused={route === 'Search'}
                 onPress={() => handlePress('Search')}
             />
             <TabItem
-                title="Profile"
+                title={t("profile")} // Translation key for "Profile"
                 Icon={ProfileSVG}
                 isFocused={route === 'Profile'}
                 onPress={() => handlePress('Profile')}

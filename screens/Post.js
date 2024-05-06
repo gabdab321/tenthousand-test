@@ -3,8 +3,11 @@ import {useQuery} from "@tanstack/react-query";
 import {getPostById} from "../services/posts";
 import CommentItem from "../components/CommentItem";
 import CustomButton from "../components/UI/CustomButton";
+import {useTranslation} from "react-i18next";
 
 export default function Post({route, navigation}) {
+    const { t , i18n} = useTranslation()
+    const isRTL = i18n.language === "ar"
     const {isLoading, isError, data} = useQuery({queryKey: ["postId", route.params.id], queryFn: () => getPostById(route.params.id)})
 
     return (
@@ -15,18 +18,18 @@ export default function Post({route, navigation}) {
                     <Image style={styles.image} source={require("../assets/Post/mock_image.png")}/>
                 </View>
 
-                <Text style={{...styles.subtitle, marginTop: 20}}>About</Text>
+                <Text style={{...styles.subtitle, marginTop: 20, textAlign: isRTL ? "right": "left" }}>{t("about")}</Text>
                 <View style={styles.aboutSection}>
                     <Text style={styles.postBody}>{data?.post.body}</Text>
                 </View>
 
-                <Text style={{...styles.subtitle, marginTop: 40}}>Comments</Text>
+                <Text style={{...styles.subtitle, marginTop: 40, textAlign: isRTL ? "right": "left" }}>{t("comments")}</Text>
                 <View style={styles.commentsList}>
                     {data?.comments.map(comment => <CommentItem key={comment.id} comment={comment}/>)}
                 </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <CustomButton variant="filled" title="Back" onPress={() => navigation.navigate("Home")} />
+                <CustomButton variant="filled" title={t("back")} onPress={() => navigation.navigate("Home")} />
             </View>
         </SafeAreaView>
     )
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         lineHeight: 16,
         color: "#606773",
-        marginLeft: 15
+        marginHorizontal: 15
     },
     aboutSection: {
         paddingHorizontal: 20,

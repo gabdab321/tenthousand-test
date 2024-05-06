@@ -6,6 +6,8 @@ import BeforeStart from "../components/BeforeStart";
 import PostsList from "../components/PostsList";
 import NavigationTab from "../components/NavigationTab";
 import {useTranslation} from "react-i18next";
+import {useContext} from "react";
+import {RTLContext} from "../App";
 
 export default function Home() {
     const {user} = useSelector(state => state.auth)
@@ -15,7 +17,7 @@ export default function Home() {
         <>
             <ScrollView style={styles.container}>
                 <LinearGradient style={styles.linearGradient} colors={["#38AB9C", "#02726E"]}>
-                    <Text style={styles.text}>Your name</Text>
+                    <Text style={styles.text}>{t("yourName")}</Text>
                     <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
                 </LinearGradient>
 

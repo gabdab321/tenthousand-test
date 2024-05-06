@@ -2,19 +2,24 @@ import {ScrollView, StyleSheet, Text, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import LinkSVG from "../assets/Home/link";
 import ArrowStrictSVG from "../assets/Home/arrowStrict";
+import {useTranslation} from "react-i18next";
+import {useMemo} from "react";
 
 function Card({title, steps, gradientColors, textColor, secondaryColor, iconStroke, iconBg, marginLeft}) {
+    const { t , i18n} = useTranslation()
+    const isRTL = i18n.language === "ar"
+
     return (
         <LinearGradient colors={gradientColors} style={{...styles.card, marginLeft}}>
             <View style={{flexDirection: "row"}}>
                 <View style={{...styles.imageContainer, backgroundColor: iconBg}}>
                     <LinkSVG stroke={iconStroke}/>
                 </View>
-                <Text style={{...styles.cardTitle, color: textColor}}>{title}</Text>
+                <Text style={{...styles.cardTitle, color: textColor, textAlign: isRTL ? "right": "left"}}>{title}</Text>
             </View>
 
             <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                <Text style={{...styles.cardSubtitle, color: secondaryColor}}>{steps} steps</Text>
+                <Text style={{...styles.cardSubtitle, color: secondaryColor, textAlign: isRTL ? "right": "left"}}>{steps} {t("steps")}</Text>
                 <ArrowStrictSVG/>
             </View>
         </LinearGradient>
@@ -23,12 +28,15 @@ function Card({title, steps, gradientColors, textColor, secondaryColor, iconStro
 
 // just a layout
 export default function BeforeStart() {
+    const { t, i18n } = useTranslation()
+    const isRTL = i18n.language === "ar"
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Before you start</Text>
+            <Text style={{...styles.title, textAlign: isRTL ? "right" : "left"}}>{t("beforeStart")}</Text>
             <ScrollView style={styles.scrollableContainer} horizontal={true}>
                 <Card
-                    title="Link your bank account"
+                    title={t("linkBankAcc")}
                     steps={2}
                     gradientColors={["#38AB9C", "#02726E"]}
                     textColor="#fff"
@@ -37,7 +45,7 @@ export default function BeforeStart() {
                     iconBg="#10C7A0"
                 />
                 <Card
-                    title="Add funds to your wallet"
+                    title={t("addFunds")}
                     steps={3}
                     gradientColors={["#EBEE63", "#EBEE63"]}
                     textColor="#000"
@@ -61,6 +69,7 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         lineHeight: 16,
         color: "#606773",
+
     },
     scrollableContainer: {
         marginTop: 10
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingVertical: 20,
         justifyContent: "space-between",
-        marginLeft: 10
+        marginLeft: 10,
     },
     cardTitle: {
         fontSize: 15,
@@ -82,7 +91,8 @@ const styles = StyleSheet.create({
         color: "#fff",
         marginLeft: 15,
         flex: 1,
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+
     },
     imageContainer: {
         width: 48,
@@ -96,6 +106,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "500",
         lineHeight: 24,
-        color: "#fff"
+        color: "#fff",
+
     }
 })
