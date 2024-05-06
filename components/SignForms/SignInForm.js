@@ -64,7 +64,7 @@ export default function SignInForm() {
                             onChangeText={onChange}
                             value={value}
                             label={t("email")}
-                            customStyles={errors.email ? {borderColor: "#D63C41"} : {}}
+                            customStyles={authError ? {borderColor: "#D63C41"} : {}}
                         >
                             {errors.email && <ErrorSVG />}
                         </CustomInput>
@@ -86,7 +86,7 @@ export default function SignInForm() {
                             placeholder={t("password")}
                             label={t("password")}
                             secureTextEntry={isSecure}
-                            customStyles={errors.password ? {borderColor: "#D63C41"} : {}}
+                            customStyles={authError ? {borderColor: "#D63C41"} : {}}
                         >
                             <EyeSVG onPress={toggleIsSecure} />
                         </CustomInput>

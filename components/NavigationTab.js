@@ -50,7 +50,7 @@ export default function NavigationTab() {
 
     const handlePress = (tabName) => {
         dispatch(setRoute(tabName))
-        navigation.navigate(tabName)
+        navigation.navigate("Splash", {to: tabName})
     };
     return (
         <View style={styles.tabBar}>

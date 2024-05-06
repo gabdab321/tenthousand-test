@@ -15,3 +15,10 @@ export async function getPostById(id) {
 
     return {post: responsePost.data, comments: responseComments.data}
 }
+
+// there is no endpoint for classic search, so it will be all posts made by user with specific id
+export async function getUserPosts(userId) {
+    const response = await axios.get(`${baseUrl}?userId=${userId}`)
+
+    return response.data
+}

@@ -1,8 +1,9 @@
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LanguageSVG from "../assets/Settings/language";
-import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import i18next from "i18next";
+import {saveLanguage} from "../services/cacheLanguage";
+import BackArrow from "../components/BackArrow";
 
 const isRTL = i18next.language?.startsWith('ar');
 
@@ -11,11 +12,14 @@ export default function ChangeLanguage() {
     const isRTL = i18n.language === "ar"
 
     function handleLanguageChange(language) {
+        saveLanguage(language)
         i18n.changeLanguage(language)
     }
 
     return (
         <SafeAreaView style={styles.container}>
+            <BackArrow/>
+
             <Text style={{...styles.title, textAlign: isRTL ? "right" : "left"}}>{t("language")}</Text>
 
             <TouchableOpacity onPress={() => handleLanguageChange("en")}>
@@ -25,7 +29,7 @@ export default function ChangeLanguage() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => handleLanguageChange("en")}>
+            <TouchableOpacity onPress={() => handleLanguageChange("ar")}>
                 <View style={{...styles.settingsBox, flexDirection: isRTL ? "row-reverse" : "row",}}>
                     <LanguageSVG/>
                     <Text style={styles.settingName}>{t("arabic")}</Text>
@@ -44,8 +48,6 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         color: "#06070A",
         marginHorizontal: 10,
-        marginTop: 30,
-
     },
     avatar: {
         width: 32,
@@ -54,7 +56,6 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     settingsBox: {
-
         alignItems: "center",
         margin: 10,
         borderWidth: 1,

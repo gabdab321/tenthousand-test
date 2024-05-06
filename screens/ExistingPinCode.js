@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import keychainPin from "../services/keychainPin";
+import secureStorageManager from "../services/secureStorageManager";
 import {clearPin} from "../store/slices/pinSlice";
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import DialpadPin from "../components/DialpadPin";
@@ -42,7 +42,7 @@ export default function ExistingPinCode({navigation}) {
     }, [])
 
     async function checkPin() {
-        const pinCode = await keychainPin.getPinCredentials()
+        const pinCode = await secureStorageManager.getPinCredentials()
         if(pinCode === code.join("")) {
             navigation.navigate("Home")
         } else {

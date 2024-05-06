@@ -43,5 +43,8 @@
   "posts": "Posts",
   "about": "About",
   "comments": "Comments",
-  "back": "Back"
+  "back": "Back",
+  "searchProducts": "Search products...",
+  "postId": "Post id:",
+  "userId": "user id:"
 }

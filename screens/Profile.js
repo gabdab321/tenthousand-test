@@ -6,6 +6,7 @@ import ArrowSVG from "../assets/Settings/arrow";
 import LogoutSVG from "../assets/Settings/logout";
 import {logout} from "../services/auth";
 import {useTranslation} from "react-i18next";
+import BackArrow from "../components/BackArrow";
 
 
 export default function Profile({navigation}) {
@@ -16,6 +17,7 @@ export default function Profile({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <BackArrow/>
             <Text style={{...styles.title, textAlign: isRTL ? "right": "left"}}>{t("settings")}</Text>
 
             <View style={styles.profile}>
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
         lineHeight: 32,
         color: "#06070A",
         marginHorizontal: 10,
-        marginTop: 30,
     },
     username: {
         marginLeft: 10

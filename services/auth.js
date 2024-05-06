@@ -2,6 +2,7 @@ import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { setUser, setToken, clearAuth } from '../store/slices/authSlice';
 import * as SecureStore from "expo-secure-store"
+import secureStorageManager from "./secureStorageManager";
 
 const api = axios.create({
     baseURL: 'https://dummyjson.com',
@@ -45,13 +46,12 @@ export const authenticate = async (dispatch, email, password) => {
 
         return true
     } catch (error) {
-        console.log('Authentication failed:', error);
-        console.log(error)
         return false
     }
 };
 
 export const logout = async (dispatch) => {
     await SecureStore.deleteItemAsync("authToken");
+    await secureStorageManager.deletePinCredentials()
     dispatch(clearAuth());
 };

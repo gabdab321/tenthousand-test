@@ -6,38 +6,38 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {createAsyncStoragePersister} from "@tanstack/query-async-storage-persister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import "./i18n";
-import {createContext, useEffect, useState} from "react";
-import i18next from "i18next";
-import {I18nManager} from "react-native";
-const queryClient = new QueryClient()
+import {useTranslation} from "react-i18next";
+import {useEffect} from "react";
+import {loadLanguage} from "./services/cacheLanguage";
+import {persistQueryClient} from "@tanstack/react-query-persist-client";
 
 
-const asyncStoragePersistor = createAsyncStoragePersister({
+const queryClient = new QueryClient();
+
+const asyncStoragePersister = createAsyncStoragePersister({
     storage: AsyncStorage,
+    key: 'react-query-cache',
 });
 
-// persist the React Query state
-queryClient.setQueryData('root', asyncStoragePersistor);
-export const RTLContext = createContext()
+persistQueryClient({
+    queryClient,
+    persister: asyncStoragePersister,
+});
 
 export default function App() {
-    const [isRTL, setIsRTL] = useState(false)
+    const {i18n} = useTranslation()
 
     useEffect(() => {
-        if(i18next.language) {
-            setIsRTL(i18next.language === "ar")
-        }
-    }, [i18next]);
+        loadLanguage().then(lang => i18n.changeLanguage(lang))
+    }, [])
 
     return (
-        <RTLContext.Provider value={isRTL}>
-            <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <QueryClientProvider client={queryClient}>
-                        <AppNavigation/>
-                    </QueryClientProvider>
-                </PersistGate>
-            </Provider>
-        </RTLContext.Provider>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <QueryClientProvider client={queryClient}>
+                    <AppNavigation/>
+                </QueryClientProvider>
+            </PersistGate>
+        </Provider>
     );
 }

@@ -1,7 +1,12 @@
 import {Text, TextInput, StyleSheet, View} from "react-native";
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 export default function CustomInput(props) {
+    const {i18n} = useTranslation()
+    const isRTL = i18n.language === "ar"
+    const iconPosition = isRTL ? {left: 10} : {right: 10}
+
     const { customStyles, label, children, ...restProps } = props;
 
     // Check if children prop exists and clone it to apply styles.icon if present
@@ -9,7 +14,7 @@ export default function CustomInput(props) {
     if (children) {
         styledChildren = React.Children.map(children, child =>
             React.cloneElement(child, {
-                style: styles.icon,
+                style: {...styles.icon, ...iconPosition},
                 ...child.props
             })
         );
@@ -19,7 +24,7 @@ export default function CustomInput(props) {
         // If there's no label, render only the TextInput with custom styles
         return (
             <TextInput
-                style={{ ...styles.input, ...customStyles }}
+                style={{ ...styles.input, ...customStyles}}
                 {...restProps}
             />
         );
@@ -27,11 +32,12 @@ export default function CustomInput(props) {
         // If there's a label, render a View containing the label and input
         return (
             <View style={{ marginVertical: 10 }}>
-                <Text style={styles.label}>{label}</Text>
+                <Text style={{...styles.label, textAlign: isRTL ? "right" : "left"}}>{label}</Text>
                 <View style={{ position: 'relative' }}>
                     <TextInput
                         style={{ ...styles.input, ...customStyles }}
                         {...restProps}
+                        writingDirection={isRTL ? "rtl" : "ltr"}
                     />
                     {/* Render styled children if it exists */}
                     {styledChildren}
@@ -44,7 +50,6 @@ export default function CustomInput(props) {
 const styles = StyleSheet.create({
     icon: {
         position: "absolute",
-        right: 10,
         top: "50%",
         transform: [
             {translateY: -12} // according to figma design, all svg icons that can be put into input are always 24px, so -12px is -50%

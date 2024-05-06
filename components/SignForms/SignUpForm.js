@@ -22,7 +22,7 @@ export default function SignUpForm() {
             password: "",
         },
     })
-    const onSubmit = (data) => console.log(data) // TODO: make something when both layouts are ready
+    const onSubmit = (data) => console.log(data)
 
     function toggleIsSecure() {
         setIsSecure(!isSecure)

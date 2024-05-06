@@ -28,7 +28,7 @@ function AppNavigation() {
                     name="Splash"
                     component={Splash}
                 />
-                {auth.token
+                {auth.token && auth.createdPin
                     ?
                     <>
                         <Stack.Screen
@@ -53,12 +53,12 @@ function AppNavigation() {
                             component={SignIn}
                         />
                         <Stack.Screen name="SignUp" component={SignUp} />
+                        <Stack.Screen
+                            name="PinCode"
+                            component={PinCode}
+                        />
                     </>
                 }
-                <Stack.Screen
-                    name="PinCode"
-                    component={PinCode}
-                />
             </Stack.Navigator>
             <StatusBar barStyle="dark-content"/>
         </NavigationContainer>

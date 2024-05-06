@@ -3,7 +3,6 @@ import enTranslations from './locales/en/en.json';
 import arTranslations from './locales/ar/ar.json';
 import i18n from "i18next";
 
-// Initialize i18next
 i18n
     .use(initReactI18next)
     .init({
@@ -15,12 +14,13 @@ i18n
                 translation: arTranslations,
             },
         },
-        lng: 'ar',
-        fallbackLng: 'ar',
+        lng: "en",
+        fallbackLng: 'en',
         interpolation: {
             escapeValue: false,
         },
         compatibilityJSON: 'v3',
     });
+
 
 export default i18n;

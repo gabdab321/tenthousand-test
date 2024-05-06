@@ -4,11 +4,12 @@ import PhoneSVG from "../assets/PinCode/phone";
 import CustomDialpad from "../components/CustomDialpad";
 import DialpadPin from "../components/DialpadPin";
 import {useDispatch, useSelector} from "react-redux";
-import keychainPin from "../services/keychainPin";
+import secureStorageManager from "../services/secureStorageManager";
 import {clearPin} from "../store/slices/pinSlice";
 import {useState} from "react";
 import * as LocalAuthentication from "expo-local-authentication";
 import {useTranslation} from "react-i18next";
+import {setCreatedPin} from "../store/slices/authSlice";
 
 export default function PinCode({route, navigation}) {
     const {t} = useTranslation()
@@ -21,13 +22,13 @@ export default function PinCode({route, navigation}) {
     // used when pin screen is opened the first time
     async function createPin() {
         navigation.navigate("PinCode", {type: "Repeat"});
-        await keychainPin.setPinCredentials(code.join(""))
+        await secureStorageManager.setPinCredentials(code.join(""))
         dispatch(clearPin()) // clear redux storage
     }
 
     // used when pin screen is opened second time
     async function submitPin() {
-        const pinCode = await keychainPin.getPinCredentials()
+        const pinCode = await secureStorageManager.getPinCredentials()
         if(pinCode === code.join("")) {
             // getting biometrics
             const hasBiometricHardware = await LocalAuthentication.hasHardwareAsync();
@@ -41,6 +42,7 @@ export default function PinCode({route, navigation}) {
                 promptMessage: t("authenticateBiometrics"),
             });
 
+            dispatch(setCreatedPin())
             navigation.navigate("Home")
             setError("")
         } else {

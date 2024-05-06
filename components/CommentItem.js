@@ -1,7 +1,6 @@
 import {View, StyleSheet, Text} from "react-native";
 
 export default function CommentItem({comment}) {
-    console.log(comment.name)
 
     return(
         <View style={styles.container}>
