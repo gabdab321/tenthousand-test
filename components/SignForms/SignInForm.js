@@ -9,10 +9,12 @@ import styles from "./formsStyles";
 import {useNavigation} from "@react-navigation/native";
 import {authenticate} from "../../services/auth";
 import {useDispatch} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 export default function SignInForm() {
-    const [isSecure, setIsSecure] = useState(true)
-    const [authError, setAuthError] = useState(false)
+    const {t} = useTranslation();
+    const [isSecure, setIsSecure] = useState(true);
+    const [authError, setAuthError] = useState(false);
     const {
         control,
         handleSubmit,
@@ -22,30 +24,33 @@ export default function SignInForm() {
             email: "",
             password: "",
         },
-    })
-    const navigation = useNavigation()
-    const dispatch = useDispatch()
+    });
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     async function onSubmit(data) {
-        const authResult = await authenticate(dispatch, data.email, data.password)
+        const authResult = await authenticate(dispatch, data.email, data.password);
 
-        if(authResult) {
-            setAuthError(false)
-            navigation.navigate("PinCode", {type: "Enter"})
-        }else {
-            setAuthError(true)
+        if (authResult) {
+            setAuthError(false);
+            navigation.navigate("PinCode", {type: "Enter"});
+        } else {
+            setAuthError(true);
         }
-
-    } // TODO: make credentials check when pin code layout are ready
+    }
 
     function toggleIsSecure() {
-        setIsSecure(!isSecure)
+        setIsSecure(!isSecure);
     }
 
     return (
         <View style={{...styles.formContainer, justifyContent: "flex-start"}}>
             <View>
-                {authError && <Text style={styles.errorMessage}>Error: Incorrect email or password</Text>}
+                {authError && (
+                    <Text style={styles.errorMessage}>
+                        {t("formInvalidError")}
+                    </Text>
+                )}
                 <Controller
                     control={control}
                     rules={{
@@ -54,14 +59,14 @@ export default function SignInForm() {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <CustomInput
-                            placeholder="E-mail"
+                            placeholder={t("email")}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             value={value}
-                            label={"E-mail"}
-                            customStyles={errors.email ? {borderColor: "#D63C41"}: {}}
+                            label={t("email")}
+                            customStyles={errors.email ? {borderColor: "#D63C41"} : {}}
                         >
-                            {errors.email && <ErrorSVG/>}
+                            {errors.email && <ErrorSVG />}
                         </CustomInput>
                     )}
                     name="email"
@@ -78,12 +83,12 @@ export default function SignInForm() {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            placeholder="Password"
-                            label="Password"
+                            placeholder={t("password")}
+                            label={t("password")}
                             secureTextEntry={isSecure}
-                            customStyles={errors.password ? {borderColor: "#D63C41"}: {}}
+                            customStyles={errors.password ? {borderColor: "#D63C41"} : {}}
                         >
-                            <EyeSVG onPress={toggleIsSecure}/>
+                            <EyeSVG onPress={toggleIsSecure} />
                         </CustomInput>
                     )}
                     name="password"
@@ -92,16 +97,16 @@ export default function SignInForm() {
 
             <KeyboardAvoidingView style={{marginTop: 30}} behavior="height">
                 <CustomButton
-                    title="Continue"
+                    title={t("continue")}
                     onPress={handleSubmit(onSubmit)}
                 />
                 <CustomButton
                     onPress={() => navigation.navigate("SignUp")}
                     customStyles={{marginTop: 10}}
-                    title="Create account"
+                    title={t("createAccount")}
                     variant="blank"
                 />
             </KeyboardAvoidingView>
         </View>
-    )
+    );
 }

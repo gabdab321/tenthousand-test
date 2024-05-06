@@ -6,9 +6,11 @@ import EyeSVG from "../../assets/Sign/eye";
 import {useState} from "react";
 import ErrorSVG from "../../assets/Sign/error_indicator";
 import styles from "./formsStyles";
+import {useTranslation} from "react-i18next";
 
-export default function SignUpForm({navigation}) {
+export default function SignUpForm() {
     const [isSecure, setIsSecure] = useState(true)
+    const {t} = useTranslation()
     const {
         control,
         handleSubmit,
@@ -38,11 +40,11 @@ export default function SignUpForm({navigation}) {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <CustomInput
-                            placeholder="Name"
+                            placeholder={t("name")}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             value={value}
-                            label={"Name"}
+                            label={t("name")}
                             customStyles={errors.name ? {borderColor: "#D63C41"}: {}}
                         >
                             {errors.name && <ErrorSVG/>}
@@ -50,7 +52,7 @@ export default function SignUpForm({navigation}) {
                     )}
                     name="name"
                 />
-                {errors.name && <Text style={styles.errorMessage}>Your name should contain from 2 to 40 symbols</Text>}
+                {errors.name && <Text style={styles.errorMessage}>{t("formNameError")}</Text>}
 
                 <Controller
                     control={control}
@@ -61,11 +63,11 @@ export default function SignUpForm({navigation}) {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <CustomInput
-                            placeholder="E-mail"
+                            placeholder={t("email")}
                             onBlur={onBlur}
                             onChangeText={onChange}
                             value={value}
-                            label={"E-mail"}
+                            label={t("email")}
                             customStyles={errors.email ? {borderColor: "#D63C41"}: {}}
                         >
                             {errors.email && <ErrorSVG/>}
@@ -73,7 +75,7 @@ export default function SignUpForm({navigation}) {
                     )}
                     name="email"
                 />
-                {errors.email && <Text style={styles.errorMessage}>Please enter correct email</Text>}
+                {errors.email && <Text style={styles.errorMessage}>{t("formEmailError")}</Text>}
 
                 <Controller
                     control={control}
@@ -87,8 +89,8 @@ export default function SignUpForm({navigation}) {
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            placeholder="Password"
-                            label="Password"
+                            placeholder={t("password")}
+                            label={t("password")}
                             secureTextEntry={isSecure}
                             customStyles={errors.password ? {borderColor: "#D63C41"}: {}}
                         >
@@ -97,11 +99,11 @@ export default function SignUpForm({navigation}) {
                     )}
                     name="password"
                 />
-                {errors.password && <Text style={styles.errorMessage}>Your password must be 8 to 64 characters long and include at least one special character, capital letter, small letter</Text>}
+                {errors.password && <Text style={styles.errorMessage}>{t("formPasswordError")}</Text>}
             </View>
 
             <KeyboardAvoidingView behavior="height">
-                <CustomButton title="Continue" onPress={handleSubmit(onSubmit)} />
+                <CustomButton title={t("continue")} onPress={handleSubmit(onSubmit)} />
             </KeyboardAvoidingView>
         </View>
     )

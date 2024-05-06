@@ -2,17 +2,19 @@ import {Dimensions, StyleSheet, Text, View} from "react-native";
 import UserSVG from "../assets/Sign/createUser";
 import SignInForm from "./SignForms/SignInForm";
 import SignUpForm from "./SignForms/SignUpForm";
+import {useTranslation} from "react-i18next";
 
 export default function SignContainer({variant}) {
     const windowHeight = Dimensions.get('window').height;
+    const {t} = useTranslation()
 
     return (
         <View style={{...styles.contentContainer, height: windowHeight-100}}>
             <View style={styles.titleContainer}>
                 <UserSVG />
                 <View style={{marginLeft: 10}}>
-                    <Text style={styles.title}>{variant}</Text>
-                    <Text style={{...styles.title, color: "#606773"}}>Personal account</Text>
+                    <Text style={styles.title}>{variant === "Sign Up" ? t("signUp") : t("signIn")}</Text>
+                    <Text style={{...styles.title, color: "#606773"}}>{t("personalAccount")}</Text>
                 </View>
             </View>
 

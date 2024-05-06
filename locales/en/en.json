@@ -1,4 +1,24 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome"
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "crowdLending": "Crowd lending",
+  "crowdEstate": "Crowd real estate",
+  "etf": "ETFs",
+  "commodities": "Commodities",
+  "crypto": "Crypto",
+  "personalAccount": "Personal account",
+  "formNameError": "Your name should contain from 2 to 40 symbols",
+  "formEmailError": "Please enter correct email",
+  "formPasswordError": "Your password must be 8 to 64 characters long and include at least one special character, capital letter, small letter",
+  "continue": "Continue",
+  "name": "Name",
+  "email": "E-mail",
+  "password": "Password",
+  "createAccount": "Create account",
+  "formInvalidError": "Error: Incorrect email or password",
+  "enterCode": "enter 5 digit code:",
+  "enterPinCode": "Enter a pin code",
+  "repeatPinCode": "Repeat a pin code",
+  "pinError": "Wrong pin code!",
+  "authenticateBiometrics": "Authenticate with biometrics"
 }

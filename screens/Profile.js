@@ -1,12 +1,14 @@
 import {Text, View, StyleSheet, SafeAreaView, TouchableOpacity} from "react-native";
 import NavigationTab from "../components/NavigationTab";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import LanguageSVG from "../assets/Settings/language";
 import ArrowSVG from "../assets/Settings/arrow";
 import LogoutSVG from "../assets/Settings/logout";
+import {logout} from "../services/auth";
 
 export default function Profile({navigation}) {
     const {user} = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     return (
         <SafeAreaView style={styles.container}>
@@ -27,7 +29,7 @@ export default function Profile({navigation}) {
             </TouchableOpacity>
 
             <Text style={styles.subtitle}>Other</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => logout(dispatch)}>
                 <View style={styles.settingsBox}>
                     <LogoutSVG/>
                     <Text style={styles.settingName}>Log Out</Text>

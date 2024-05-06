@@ -5,10 +5,13 @@ import EstateSVG from "../assets/Welcome/estate";
 import CommoditiesSVG from "../assets/Welcome/commodities";
 import EtfSVG from "../assets/Welcome/etf";
 import CustomButton from "../components/UI/CustomButton";
+import {useTranslation} from "react-i18next";
 
 // TODO: figure out how to properly make background image
 
 export default function Welcome({navigation}) {
+    const {t} = useTranslation()
+
     return (
         <SafeAreaView style={styles.container}>
             {/*<ImageBackground*/}
@@ -20,34 +23,34 @@ export default function Welcome({navigation}) {
                         <View style={{...styles.option, backgroundColor: "#00B28C"}} />
                         <View style={styles.option}>
                             <EstateSVG/>
-                            <Text style={styles.optionTitle}>Crowd real estate</Text>
+                            <Text style={styles.optionTitle}>{t("crowdLending")}</Text>
                         </View>
                         <View style={styles.option}>
                             <EtfSVG/>
-                            <Text style={styles.optionTitle}>ETFs</Text>
+                            <Text style={styles.optionTitle}>{t("etf")}</Text>
                         </View>
                     </View>
 
                     <View style={{...styles.optionsContainer, marginTop: 136/2}}>
                         <View style={styles.option}>
                             <CrowdLendingSVG/>
-                            <Text style={styles.optionTitle}>Crowd lending</Text>
+                            <Text style={styles.optionTitle}>{t("crowdEstate")}</Text>
                         </View>
 
                         <View style={styles.option}>
                             <CommoditiesSVG/>
-                            <Text style={styles.optionTitle}>Commodities</Text>
+                            <Text style={styles.optionTitle}>{t("commodities")}</Text>
                         </View>
 
                         <View style={styles.option}>
                             <CryptoSVG/>
-                            <Text style={styles.optionTitle}>Crypto</Text>
+                            <Text style={styles.optionTitle}>{t("crypto")}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <CustomButton onPress={() => navigation.navigate("SignIn")} variant="blank" title="Sign In"/>
-                    <CustomButton onPress={() => navigation.navigate("SignUp")} marginTop={5} variant="filled" title="Sign Up"/>
+                    <CustomButton onPress={() => navigation.navigate("SignIn")} variant="blank" title={t("signIn")}/>
+                    <CustomButton onPress={() => navigation.navigate("SignUp")} marginTop={5} variant="filled" title={t("signUp")}/>
                 </View>
             {/*</ImageBackground>*/}
         </SafeAreaView>

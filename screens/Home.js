@@ -5,9 +5,11 @@ import PersonalAdvisor from "../components/PersonalAdvisor";
 import BeforeStart from "../components/BeforeStart";
 import PostsList from "../components/PostsList";
 import NavigationTab from "../components/NavigationTab";
+import {useTranslation} from "react-i18next";
 
 export default function Home() {
     const {user} = useSelector(state => state.auth)
+    const {t, i18n} = useTranslation()
 
     return (
         <>

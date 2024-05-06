@@ -8,8 +8,10 @@ import keychainPin from "../services/keychainPin";
 import {clearPin} from "../store/slices/pinSlice";
 import {useState} from "react";
 import * as LocalAuthentication from "expo-local-authentication";
+import {useTranslation} from "react-i18next";
 
 export default function PinCode({route, navigation}) {
+    const {t} = useTranslation()
     const dispatch = useDispatch()
     const code = useSelector(state => state.pin.code)
     const {type} = route.params
@@ -36,14 +38,13 @@ export default function PinCode({route, navigation}) {
             }
 
             const result = await LocalAuthentication.authenticateAsync({
-                promptMessage: 'Authenticate with biometrics',
+                promptMessage: t("authenticateBiometrics"),
             });
 
-            console.log("a")
             navigation.navigate("Home")
             setError("")
         } else {
-            setError("Wrong pin code!")
+            setError(t("pinError"))
         }
     }
 
@@ -56,12 +57,12 @@ export default function PinCode({route, navigation}) {
                     <View style={styles.iconContainer}>
                         <PhoneSVG/>
                     </View>
-                    <Text style={styles.title}>{route.params.type} a pin code</Text>
+                    <Text style={styles.title}>{route.params.type === "Enter" ? t("enterPinCode") : t("repeatPinCode")}</Text>
                     {error && <Text style={styles.errorMessage}>{error}</Text>}
                 </View>
 
                 <View style={styles.codeContainer}>
-                    <Text style={styles.subtitle}>enter 5 digit code:</Text>
+                    <Text style={styles.subtitle}>{t("enterCode")}</Text>
                     <DialpadPin/>
                 </View>
 
@@ -77,9 +78,9 @@ export default function PinCode({route, navigation}) {
 
                 {type === "Enter"
                     ?
-                    <CustomButton onPress={createPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
+                    <CustomButton onPress={createPin} title={t("continue")} variant="filled" customStyles={{marginTop: 20}}/>
                     :
-                    <CustomButton onPress={submitPin} title="Continue" variant="filled" customStyles={{marginTop: 20}}/>
+                    <CustomButton onPress={submitPin} title={t("continue")} variant="filled" customStyles={{marginTop: 20}}/>
                 }
             </View>
 
