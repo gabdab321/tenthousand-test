@@ -7,17 +7,15 @@ import EtfSVG from "../assets/Welcome/etf";
 import CustomButton from "../components/UI/CustomButton";
 import {useTranslation} from "react-i18next";
 
-// TODO: figure out how to properly make background image
-
 export default function Welcome({navigation}) {
     const {t} = useTranslation()
 
     return (
         <SafeAreaView style={styles.container}>
-            {/*<ImageBackground*/}
-            {/*    source={require("../assets/Welcome/bg.png")}*/}
-            {/*    style={styles.bgImage}*/}
-            {/*>*/}
+            <ImageBackground
+                source={require("../assets/Welcome/bg.png")}
+                style={styles.bgImage}
+            >
                 <View style={styles.blockContainer}>
                     <View style={styles.optionsContainer}>
                         <View style={{...styles.option, backgroundColor: "#00B28C"}} />
@@ -52,19 +50,18 @@ export default function Welcome({navigation}) {
                     <CustomButton onPress={() => navigation.navigate("SignIn")} variant="blank" title={t("signIn")}/>
                     <CustomButton onPress={() => navigation.navigate("SignUp")} marginTop={5} variant="filled" title={t("signUp")}/>
                 </View>
-            {/*</ImageBackground>*/}
+            </ImageBackground>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    // bgImage: {
-    //     width: "100%",
-    //     height: "auto",
-    //     position: "absolute",
-    //     bottom: 0,
-    //     resizeMode: "cover"
-    // },
+    bgImage: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "space-between",
+        resizeMode: "cover"
+    },
     container: {
         display: "flex",
         justifyContent: "space-between",

@@ -28,7 +28,7 @@ export default function Search() {
     return (
         <SafeAreaView style={styles.container}>
             <BackArrow />
-            <Text style={styles.title}>{t("search")}</Text>
+            <Text style={{...styles.title, textAlign: isRTL ? "right" : "left"}}>{t("search")}</Text>
             <View style={styles.inputContainer}>
                 <SearchSVG style={styles.icon} color="#606773"/>
                 <TextInput
@@ -37,6 +37,7 @@ export default function Search() {
                     style={styles.input}
                     keyboardType="number-pad"
                     placeholder={t("searchProducts")}
+                    writingDirection={isRTL ? "rtl" : "ltr"}
                 />
             </View>
 

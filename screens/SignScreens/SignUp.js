@@ -4,7 +4,6 @@ import ArrowSVG from "../../assets/arrow";
 import styles from "./signStyles";
 import SignContainer from "../../components/SignContainer";
 
-// TODO: make nicer keyboard avoiding behavior
 export default function SignUp({navigation}) {
     return (
         <View style={styles.container}>

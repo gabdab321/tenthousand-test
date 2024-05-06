@@ -1,11 +1,10 @@
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import LanguageSVG from "../assets/Settings/language";
 import {useTranslation} from "react-i18next";
-import i18next from "i18next";
 import {saveLanguage} from "../services/cacheLanguage";
 import BackArrow from "../components/BackArrow";
-
-const isRTL = i18next.language?.startsWith('ar');
+import ActiveSVG from "../assets/Settings/active";
+import UnActiveSVG from "../assets/Settings/unActive";
 
 export default function ChangeLanguage() {
     const { t , i18n} = useTranslation()
@@ -24,15 +23,21 @@ export default function ChangeLanguage() {
 
             <TouchableOpacity onPress={() => handleLanguageChange("en")}>
                 <View style={{...styles.settingsBox, flexDirection: isRTL ? "row-reverse" : "row",}}>
-                    <LanguageSVG/>
-                    <Text style={styles.settingName}>{t("english")}</Text>
+                    <View style={{flexDirection: isRTL ? "row-reverse" : "row", alignItems: "center"}}>
+                        <LanguageSVG/>
+                        <Text style={styles.settingName}>{t("english")}</Text>
+                    </View>
+                    {i18n.language === "en" ? <ActiveSVG/> : <UnActiveSVG/>}
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => handleLanguageChange("ar")}>
                 <View style={{...styles.settingsBox, flexDirection: isRTL ? "row-reverse" : "row",}}>
-                    <LanguageSVG/>
-                    <Text style={styles.settingName}>{t("arabic")}</Text>
+                    <View style={{flexDirection: isRTL ? "row-reverse" : "row", alignItems: "center"}}>
+                        <LanguageSVG/>
+                        <Text style={styles.settingName}>{t("arabic")}</Text>
+                    </View>
+                    {i18n.language === "ar" ? <ActiveSVG /> : <UnActiveSVG/>}
                 </View>
             </TouchableOpacity>
         </SafeAreaView>
@@ -41,6 +46,9 @@ export default function ChangeLanguage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    checked: {
+
     },
     title: {
         fontSize: 22,
@@ -57,6 +65,7 @@ const styles = StyleSheet.create({
     },
     settingsBox: {
         alignItems: "center",
+        justifyContent: "space-between",
         margin: 10,
         borderWidth: 1,
         borderRadius: 16,
